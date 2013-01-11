@@ -1,0 +1,23 @@
+#list avd
+
+_avds()
+{
+    local cur prev dev
+    COMPREPLY=()
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    prev="${COMP_WORDS[COMP_CWORD-1]}"
+    dev=`cat ~/.avds`
+
+    case "$prev" in
+        -avd)
+            COMPREPLY=( $(compgen -W "${dev}" ${cur}) )
+            return 0
+            ;;
+        *)
+            ;;
+    esac
+
+    COMPREPLY=( $(compgen -W "`cat ~/.emulator_help`" -- ${cur}) )
+}
+
+complete -o bashdefault -o default -F _avds emulator

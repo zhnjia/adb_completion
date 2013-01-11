@@ -1,0 +1,16 @@
+#!/bin/sh
+
+if [ $# -ne 1 ]; then
+    android list avd | sed -n '/Name:/p' | awk '{print $2}' > ~/.avds
+    emulator -help | sed -n '3,$p' | awk '{print $1}' > ~/.emulator_help
+    exit 0
+fi
+
+adbpath=`pwd`"/adb"
+emulatorpath=`pwd`"/emulator"
+
+if [ $1 == "install" ]; then
+    ln -s $adbpath /etc/bash_completion.d/adb
+    ln -s $emulatorpath /etc/bash_completion.d/emulator
+    exit 0
+fi
